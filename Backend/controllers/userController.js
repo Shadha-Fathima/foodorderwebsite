@@ -6,13 +6,13 @@ export const createUser = async(req,res,next)=>{
     console.log("route hitted")
     try {
         const {name,email,password,role = 'user'} = req.body
-        console.log(name ,email)
+        
         if(!name || !email || !password){
             return res.status(400).json({success:false,message:'all fields are required'})
         }
 
         const isUserExist = await User.findOne({email})
-        console.log('is user exist',isUserExist)
+        
         if(isUserExist){
             return res.status(400).json({success:true,message:'user already exists'})
         }
@@ -68,8 +68,8 @@ export const userLogin= async(req,res,next)=>{
         res.json({success: true,message:'user login successfully'})
 
     } catch (error) {
-        console.log('error during login', error)
-        res.status(500).json({message:error.message || 'Internal server error'})
+        console.log('error login', error)
+        res.status(500).json({message:error.message || 'Internal server error'}) 
     }
 
 
