@@ -2,6 +2,9 @@ import express from 'express'
 import { connectDB } from './config/dbConfig.js'
 import userRouter from './routes/userRoute.js'
 import cookieParser from 'cookie-parser'
+import restaurantRouter from './routes/restaurantRoute.js'
+import adminRouter from './routes/adminRoute.js'
+import foodRouter from './routes/foodRoute.js'
 // app config
 const app = express()
 const port = 3000
@@ -20,7 +23,9 @@ app.use(cookieParser())
 
 // api endpoints
 app.use('/api/user',userRouter)
-
+app.use('/api/restaurant',restaurantRouter)
+app.use('/api/admin',adminRouter)
+app.use('/api/food',foodRouter)
 
 
 app.get('/', (req, res) => {

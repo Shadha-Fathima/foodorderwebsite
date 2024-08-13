@@ -1,0 +1,98 @@
+import { Food } from "../models/foodModel.js";
+
+
+export const getFood= async(req,res,next)=>{
+    try {
+
+        const foodList = await Food.find();
+
+        res.json({success: true,message:'fetched food list',data:foodList})
+
+        // check restaurant exist
+        if (!foodList) {
+            return res.status(404).json({ success: false, message: 'food not found' });
+          }
+
+    } catch (error) {
+        console.log('error', error)
+        res.status(500).json({message:error.message || 'Internal server error'}) 
+    }
+
+
+}
+
+
+export const addFood= async(req,res,next)=>{
+    
+    try {
+
+        const { name,description,price } = req.body
+        
+        if(!name || !description || !price){
+            return res.status(400).json({success:false,message:'all fields are required'})
+        }
+
+        const newFood =new Food({name,description,price})
+         await newFood.save()
+
+        res.json({success: true,message:' food added to food list',data:newFood})
+
+    } catch (error) {
+        console.log('error', error)
+        res.status(500).json({message:error.message || 'Internal server error'}) 
+    }
+
+
+}
+
+
+export const updateFood= async(req,res,next)=>{
+    
+    try {
+
+        const { name,description,price } = req.body
+        
+        const {id} = req.params
+        
+        const updatedFood = await Food.findByIdAndUpdate(id,{name,description,price},{new:true})
+        
+        
+        
+        // check restaurant exist
+        if (!updatedFood) {
+            return res.status(404).json({ success: false, message: 'food not updated' });
+          }
+
+        res.json({success: true,message:'food updated successfully',data:updatedFood})
+
+    } catch (error) {
+        console.log('error login', error)
+        res.status(500).json({message:error.message || 'Internal server error'}) 
+    }
+
+
+}
+
+export const deleteFood= async(req,res,next)=>{
+    
+    try {
+
+        const { name,description,price } = req.body
+        const {id} = req.params
+        
+        const deletedFood = await Food.findByIdAndDelete(id,{name,description,price},{new:true})
+        
+        // check food exist
+        if (!deletedFood) {
+            return res.status(404).json({ success: false, message: 'food not deleted' });
+          }
+
+        res.json({success: true,message:'food deleted successfully',data:deletedFood})
+
+    } catch (error) {
+        console.log('error', error)
+        res.status(500).json({message:error.message || 'Internal server error'}) 
+    }
+
+
+}
