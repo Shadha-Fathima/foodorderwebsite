@@ -24,13 +24,13 @@ export const createRestaurant= async(req,res,next)=>{
     
     try {
 
-        const { name,address,phone,email,menuItems,createdAt } = req.body
+        const { name,address,phone,email,foodItems,createdAt } = req.body
         
         if(!name || !address || !phone || !email){
             return res.status(400).json({success:false,message:'all fields are required'})
         }
 
-        const newRestaurant =new Restaurant({name,address,phone,email,menuItems,createdAt})
+        const newRestaurant =new Restaurant({name,address,phone,email,foodItems,createdAt})
          await newRestaurant.save()
 
         res.json({success: true,message:'restaurant created successfully',data:newRestaurant})
@@ -47,11 +47,11 @@ export const updateRestaurant= async(req,res,next)=>{
     
     try {
 
-        const { name,address,phone,email,menuItems,createdAt } = req.body
+        const { name,address,phone,email,foodItems,createdAt } = req.body
         console.log("route hits")
         const {id} = req.params
         
-        const updatedRestaurant = await Restaurant.findByIdAndUpdate(id,{name,address,email,phone,menuItems,createdAt},{new:true})
+        const updatedRestaurant = await Restaurant.findByIdAndUpdate(id,{name,address,email,phone,foodItems,createdAt},{new:true})
         
         // check restaurant exist
         if (!updatedRestaurant) {
@@ -73,10 +73,10 @@ export const deleteRestaurant= async(req,res,next)=>{
     
     try {
 
-        const { name,address,phone,email,menuItems,createdAt } = req.body
+        const { name,address,phone,email,foodItems,createdAt } = req.body
         const {id} = req.params
         
-        const deletedRestaurant = await Restaurant.findByIdAndDelete(id,{name,address,email,phone,menuItems,createdAt},{new:true})
+        const deletedRestaurant = await Restaurant.findByIdAndDelete(id,{name,address,email,phone,foodItems,createdAt},{new:true})
         
         // check restaurant exist
         if (!deletedRestaurant) {

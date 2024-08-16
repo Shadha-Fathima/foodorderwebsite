@@ -26,13 +26,13 @@ export const addFood= async(req,res,next)=>{
     
     try {
 
-        const { name,description,price } = req.body
+        const { name,description,price,restaurantId } = req.body
         
-        if(!name || !description || !price){
+        if(!name || !description || !price || !restaurantId){
             return res.status(400).json({success:false,message:'all fields are required'})
         }
 
-        const newFood =new Food({name,description,price})
+        const newFood =new Food({name,description,price,restaurantId})
          await newFood.save()
 
         res.json({success: true,message:' food added to food list',data:newFood})
@@ -50,11 +50,11 @@ export const updateFood= async(req,res,next)=>{
     
     try {
 
-        const { name,description,price } = req.body
+        const { name,description,price ,restaurantId} = req.body
         
         const {id} = req.params
         
-        const updatedFood = await Food.findByIdAndUpdate(id,{name,description,price},{new:true})
+        const updatedFood = await Food.findByIdAndUpdate(id,{name,description,price,restaurantId},{new:true})
         
         
         
@@ -77,10 +77,10 @@ export const deleteFood= async(req,res,next)=>{
     
     try {
 
-        const { name,description,price } = req.body
+        const { name,description,price,restaurantId } = req.body
         const {id} = req.params
         
-        const deletedFood = await Food.findByIdAndDelete(id,{name,description,price},{new:true})
+        const deletedFood = await Food.findByIdAndDelete(id,{name,description,price,restaurantId},{new:true})
         
         // check food exist
         if (!deletedFood) {

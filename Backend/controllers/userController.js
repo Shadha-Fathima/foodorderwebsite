@@ -47,7 +47,7 @@ export const userLogin= async(req,res,next)=>{
         if(!email || !password){
             return res.status(400).json({success:false,message:'all fields are required'})
         }
-        
+        // is user exist or not
         const isUserExist = await User.findOne({email})
         
         if(!isUserExist){
@@ -55,7 +55,7 @@ export const userLogin= async(req,res,next)=>{
             return res.status(400).json({success:false,message:'user does not exist'})
         }
         
-        const passwordMatch =   await bcrypt.compare(password, isUserExist.password)
+        const passwordMatch =  bcrypt.compare(password, isUserExist.password)
         
         if(!passwordMatch){
             
@@ -111,6 +111,71 @@ export const checkUser= async(req,res,next)=>{
 
     } catch (error) {
         console.log('error during login', error)
+        res.status(500).json({message:error.message || 'Internal server error'}) 
+    }
+
+
+}
+
+
+
+export const userSignup = async (req, res, next) => {
+    try {
+        const { name, email, password, role } = req.body;
+        if (!name || !email || !password) {
+            return res.status(400).json({ success: false, message: 'all fields are required' });
+        }
+
+        //const isUserExist = await User.findOne({ email });
+        //if (isUserExist) {
+           // return res.status(400).json({ success: false, message: 'user already exists' });
+        //}
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = new User({ name, email, password: hashedPassword, role: role || 'user' });
+        await newUser.save();
+
+        const token = generateUserToken(email);
+        res.cookie("token", token);
+
+        res.json({ success: true, message: 'User signed up successfully', data: newUser });
+    } catch (error) {
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+export const userLogout= async(req,res,next)=>{
+    
+    try {
+        const {email,password} = req.body
+        
+        if(!email || !password){
+            return res.status(400).json({success:false,message:'all fields are required'})
+        }
+        
+        const isUserExist = await User.findOne({email})
+        
+        if(!isUserExist){
+            console.log('user does not exist')
+            return res.status(400).json({success:false,message:'user does not exist'})
+        }
+        
+        const passwordMatch =   await bcrypt.compare(password, isUserExist.password)
+        
+        if(!passwordMatch){
+            
+            return res.status(400).json({success:false,message:'user not authenticated'})
+        }
+
+        const token = generateUserToken(email)
+        console.log('generated token', token)
+        
+        res.cookie("token",token)
+
+        res.json({success: true,message:'user logged out successfully'})
+
+    } catch (error) {
+        console.log('error during logout', error)
         res.status(500).json({message:error.message || 'Internal server error'}) 
     }
 

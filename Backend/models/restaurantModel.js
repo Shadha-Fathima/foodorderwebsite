@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+
 const restaurantSchema = new mongoose.Schema({
     name: {
       type: String,
@@ -20,10 +21,10 @@ const restaurantSchema = new mongoose.Schema({
       required: [true, 'Email is required'],
       unique: true,
     },
-    menuItems: [
+    foodItems: [
       {
         type: mongoose.Types.ObjectId,
-        ref: 'FoodItem',
+        ref:'Food',
       },
     ],
     createdAt: {

@@ -2,9 +2,14 @@ import express from 'express'
 import { connectDB } from './config/dbConfig.js'
 import userRouter from './routes/userRoute.js'
 import cookieParser from 'cookie-parser'
-import restaurantRouter from './routes/restaurantRoute.js'
-import adminRouter from './routes/adminRoute.js'
-import foodRouter from './routes/foodRoute.js'
+import restaurantRoute from './routes/restaurantRoute.js'
+import adminRoute from './routes/adminRoute.js'
+import foodRoute from './routes/foodRoute.js'
+import orderRoute from './routes/orderRoute.js'
+import couponRoute from './routes/couponRoute.js'
+import cartRoute from './routes/cartRoute.js'
+
+
 // app config
 const app = express()
 const port = 3000
@@ -23,9 +28,12 @@ app.use(cookieParser())
 
 // api endpoints
 app.use('/api/user',userRouter)
-app.use('/api/restaurant',restaurantRouter)
-app.use('/api/admin',adminRouter)
-app.use('/api/food',foodRouter)
+app.use('/api/restaurant',restaurantRoute)
+app.use('/api/admin',adminRoute)
+app.use('/api/food',foodRoute)
+app.use('/api/order',orderRoute)
+app.use('/api/coupon',couponRoute)
+app.use('/api/cart',cartRoute)
 
 
 app.get('/', (req, res) => {
