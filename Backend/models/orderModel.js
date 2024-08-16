@@ -6,11 +6,11 @@ const orderSchema = new mongoose.Schema({
         ref:'User', required: true },
     restaurantId: { type: mongoose.Types.ObjectId, 
         ref: 'Restaurant', required: true },
-    fooditems: {
+    fooditems: [ {
         foodItemsId: { type: mongoose.Types.ObjectId, 
         ref: 'Food' },
         quantity: { type: Number, }
-    },
+    }],
     totalPrice: { type: Number, required: true },
     status: { type: String, enum: ['pending', 'confirmed', 'in progress', 'completed', 'canceled'], default: 'pending' },
     createdAt: { type: Date, default: Date.now },

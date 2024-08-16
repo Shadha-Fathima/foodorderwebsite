@@ -12,6 +12,9 @@ const restaurantSchema = new mongoose.Schema({
       state: String,
       zip: String,
     },
+    image:{
+      type:String,
+    },
     phone: {
       type: String,
       required: [true, 'Phone number is required'],

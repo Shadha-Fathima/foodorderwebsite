@@ -28,7 +28,7 @@ export const createOrder= async(req,res,next)=>{
             return res.status(400).json({success:false,message:'all fields are required'})
         }
 
-        const newOrder = new Order({ userId,restaurantId,foodItems,totalPrice,status,createdAt,deliveryAddress,paymentStatus})
+        const newOrder = new Order({ userId,restaurantId,foodItemsId,totalPrice,status,createdAt,deliveryAddress,paymentStatus})
         await newOrder.save()
 
         res.json({success: true,message:'order placed successfully',data:newOrder})

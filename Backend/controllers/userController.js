@@ -6,7 +6,7 @@ export const createUser = async(req,res,next)=>{
     
     try {
         const {name,email,password,role = 'user'} = req.body
-        
+        console.log('route hits')
         if(!name || !email || !password){
             return res.status(400).json({success:false,message:'all fields are required'})
         }
