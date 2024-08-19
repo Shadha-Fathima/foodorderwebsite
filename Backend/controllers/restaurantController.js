@@ -33,15 +33,15 @@ export const createRestaurant= async(req,res,next)=>{
             return res.status(400).json({success:false,message:'all fields are required'})
         }
         
-        console.log('image-restaurant====',req.file)
+        /*console.log('image-restaurant====',req.file)
 
         const uploadResult = await cloudinaryInstance.uploader.upload(req.file.path).catch((error)=>{
             console.log(error)
         })
          
-        console.log(uploadResult)
+        console.log(uploadResult)*/
 
-        const newRestaurant =new Restaurant({name,address,image:uploadResult.url,phone,email,foodItems,createdAt})
+        const newRestaurant =new Restaurant({name,address,/*image:uploadResult.url*/phone,email,foodItems,createdAt})
         await newRestaurant.save()
 
         res.json({success: true,message:'restaurant created successfully',data:newRestaurant})

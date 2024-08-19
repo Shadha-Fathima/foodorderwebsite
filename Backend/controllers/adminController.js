@@ -31,7 +31,7 @@ export const adminLogin= async(req,res,next)=>{
 
        
         
-        if(password!==isAdminExist.password){
+        if(password==isAdminExist.password){
             
             return res.status(400).json({success:false,message:'admin not authenticated'})
         }
@@ -248,7 +248,7 @@ export const adminLogout= async(req,res,next)=>{
 
        // const passwordMatch =   await bcrypt.compare(password,isAdminExist.password)
         
-        if(password!==isAdminExist.password){
+        if(password==isAdminExist.password){
             
             return res.status(400).json({success:false,message:'admin not authenticated'})
         }

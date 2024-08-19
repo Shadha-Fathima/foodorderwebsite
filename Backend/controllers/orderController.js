@@ -17,7 +17,7 @@ export const getOrderList= async(req,res,next)=>{
 }
 
 
-
+// creating order
 export const createOrder= async(req,res,next)=>{
     
     try {
@@ -28,7 +28,7 @@ export const createOrder= async(req,res,next)=>{
             return res.status(400).json({success:false,message:'all fields are required'})
         }
 
-        const newOrder = new Order({ userId,restaurantId,foodItemsId,totalPrice,status,createdAt,deliveryAddress,paymentStatus})
+        const newOrder = new Order({ userId,restaurantId,foodItems,totalPrice,status,createdAt,deliveryAddress,paymentStatus})
         await newOrder.save()
 
         res.json({success: true,message:'order placed successfully',data:newOrder})
@@ -41,6 +41,7 @@ export const createOrder= async(req,res,next)=>{
 
 }
 
+// get the users order by id
 export const getOrderById = async (req,res,next)=>{
     try {
         const {orderId} = req.params;
@@ -56,7 +57,7 @@ export const getOrderById = async (req,res,next)=>{
     }
 }
 
-
+// get the users orders
 export const getUserOrders = async (req,res)=>{
     try {
         const {userId} = req.params
@@ -67,7 +68,7 @@ export const getUserOrders = async (req,res)=>{
         res.status(500).json({message: error.message || "Internal server error"})
     }
 }
-
+// update order stautus of the user
 export const updateOrderStatus = async (req, res) => {
     try {
         const { orderId } = req.params;

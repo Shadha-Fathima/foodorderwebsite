@@ -7,7 +7,7 @@ export const addToCart = async (req, res) => {
         
         const { userId, foodItemsId, quantity } = req.body;
 
-        const cart = await Cart.findOne({ userId });
+        let cart = await Cart.findOne({ userId });
 
         if (!cart) {
             cart = new Cart({ userId, items: [] });
@@ -26,10 +26,12 @@ export const addToCart = async (req, res) => {
             cart.items.push({ foodItemsId, quantity });
         }
 
-        cart.totalPrice = cart.items.reduce(async (total, item) => {
-            const fooditems =await Food.findById(item.foodItemsId);
-            return total + (foodItems.price * item.quantity);
-        }, 0);
+        let totalPrice = 0;
+        for (const item of cart.items) {
+            const foodItem = await Food.findById(item.foodItemsId);
+            totalPrice += foodItem.price * item.quantity;
+        }
+        cart.totalPrice = totalPrice;
 
         await cart.save();
 
@@ -52,10 +54,12 @@ export const removeFromCart = async (req, res) => {
 
         cart.items = cart.items.filter(item => !item.foodItemsId.equals(foodItemsId));
 
-        cart.totalPrice = cart.items.reduce(async (total, item) => {
-            const fooditems = await Food.findById(item.foodItemsId);
-            return total + (fooditems.price * item.quantity);
-        }, 0);
+        let totalPrice = 0;
+        for (const item of cart.items) {
+            const foodItem = await Food.findById(item.foodItemsId);
+            totalPrice += foodItem.price * item.quantity;
+        }
+        cart.totalPrice = totalPrice;
 
         await cart.save();
 
@@ -83,10 +87,12 @@ export const updateCartItem = async (req, res) => {
             return res.status(404).json({ success: false, message: 'Item not found in cart' });
         }
 
-        cart.totalPrice = cart.items.reduce(async (total, item) => {
-            const foodItems = await Food.findById(item.foodItemsId);
-            return total + (foodItems.price * item.quantity);
-        }, 0);
+        let totalPrice = 0;
+        for (const item of cart.items) {
+            const foodItem = await Food.findById(item.foodItemsId);
+            totalPrice += foodItem.price * item.quantity;
+        }
+        cart.totalPrice = totalPrice;
 
         await cart.save();
 

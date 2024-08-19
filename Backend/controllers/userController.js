@@ -83,13 +83,13 @@ export const userProfile= async(req,res,next)=>{
     try {
 
         const {id} = req.params;
-        const userData = await User.findById(id);
+        const userData = await User.findOne();
         
 
         res.json({success: true,message:'user data fetched',data:userData})
 
     } catch (error) {
-        console.log('error login', error)
+        console.log('error', error)
         res.status(500).json({message:error.message || 'Internal server error'}) 
     }
 
