@@ -8,7 +8,8 @@ import foodRoute from './routes/foodRoute.js'
 import orderRoute from './routes/orderRoute.js'
 import couponRoute from './routes/couponRoute.js'
 import cartRoute from './routes/cartRoute.js'
-
+import paymentRoute from './routes/paymentRoute.js'
+import ratingRoute from './routes/ratingRoute.js'
 
 // app config
 const app = express()
@@ -34,7 +35,8 @@ app.use('/api/food',foodRoute)
 app.use('/api/order',orderRoute)
 app.use('/api/coupon',couponRoute)
 app.use('/api/cart',cartRoute)
-
+app.use('/api/payment',paymentRoute)
+app.use('/api/rating',ratingRoute)
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
