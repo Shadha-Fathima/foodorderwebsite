@@ -28,7 +28,7 @@ const restaurantSchema = new mongoose.Schema({
       {
         type: mongoose.Types.ObjectId,
         ref:'Food',
-      },
+      }
     ],
     createdAt: {
       type: Date,

@@ -5,7 +5,7 @@ export const authAdmin = (req,res,next) =>{
         const {token} = req.cookies;
         
         if(!token){
-            return res.stataus(400).json({success: false,message:"admin not authenticated"})
+            return res.status(400).json({success: false,message:"admin not authenticated"})
         }
 
         const tokenVerified = jwt.verify(token,process.env.JWT_SECRET_KEY);

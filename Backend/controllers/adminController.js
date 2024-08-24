@@ -31,7 +31,7 @@ export const adminLogin= async(req,res,next)=>{
 
        
         
-        if(password==isAdminExist.password){
+        if(password!==isAdminExist.password){
             
             return res.status(400).json({success:false,message:'admin not authenticated'})
         }
@@ -44,14 +44,36 @@ export const adminLogin= async(req,res,next)=>{
         res.json({success: true,message:'admin logged in successfully'})
 
     } catch (error) {
-        console.log('error during login', error)
+        console.log('error', error)
         res.status(500).json({message:error.message || 'Internal server error'}) 
     }
 
 
 }
+
+
+
+export const adminProfile = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const adminData = await Admin.findById(id).select('-password');  
+
+        if (!adminData) {
+            return res.status(404).json({ success: false, message: 'Admin not found' });
+        }
+
+        res.json({ success: true, message: 'Admin data fetched', data: adminData });
+
+    } catch (error) {
+        console.log('Error fetching admin data:', error);
+        res.status(500).json({ message: error.message || 'Internal server error' });
+    }
+};
+
+
+
 // admin profile
-export const adminProfile= async(req,res,next)=>{
+/*export const adminProfile= async(req,res,next)=>{
     
     try {
 
@@ -67,7 +89,8 @@ export const adminProfile= async(req,res,next)=>{
     }
 
 
-}
+}*/
+
 // check Admin is existing or not
 export const checkAdmin= async(req,res,next)=>{
     
@@ -97,14 +120,42 @@ export const adminSignup = async (req, res, next) => {
             return res.status(400).json({ success: false, message: 'All fields are required' });
         }
 
-        //const isAdminExist = await Admin.findOne({ email });
-        //if (isAdminExist) {
-            //return res.status(400).json({ success: false, message: 'Admin already exists' });
-        //}
+        const isAdminExist = await Admin.findOne({ email });
+        if (isAdminExist) {
+            return res.status(400).json({ success: false, message: 'Admin already exists' });
+        }
 
-        //const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newAdmin = new Admin({ name, email, password: hashedPassword, role: 'admin' });
+        await newAdmin.save();
+
+        const token = generateAdminToken(email);
+        res.cookie("token", token, { httpOnly: true });
+
+        
+        res.status(204).send();  
+
+    } catch (error) {
+        res.status(500).json({ message: error.message || 'Internal server error' });
+    }
+};
+
+/*export const adminSignup = async (req, res, next) => {
+    try {
+        const { name, email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({ success: false, message: 'All fields are required' });
+        }
+
+        const isAdminExist = await Admin.findOne({ email });
+        if (isAdminExist) {
+            return res.status(400).json({ success: false, message: 'Admin already exists' });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
         const salt = 10;
-        const hashedPassword = bcrypt.hashSync('adminpassword', salt);
+        //const hashedPassword = bcrypt.hashSync('adminpassword', salt);
 
         const newAdmin = new Admin({ name, email, password: hashedPassword, role: 'admin' });
         await newAdmin.save();
@@ -116,7 +167,7 @@ export const adminSignup = async (req, res, next) => {
     } catch (error) {
         res.status(500).json({ message:error.message || 'Internal server error' });
     }
-};
+};*/
 
 // list all restaurants
 export const listRestaurants = async (req, res) => {

@@ -1,6 +1,6 @@
 import express from 'express'
 import { connectDB } from './config/dbConfig.js'
-import userRouter from './routes/userRoute.js'
+import userRoute from './routes/userRoute.js'
 import cookieParser from 'cookie-parser'
 import restaurantRoute from './routes/restaurantRoute.js'
 import adminRoute from './routes/adminRoute.js'
@@ -10,6 +10,7 @@ import couponRoute from './routes/couponRoute.js'
 import cartRoute from './routes/cartRoute.js'
 import paymentRoute from './routes/paymentRoute.js'
 import ratingRoute from './routes/ratingRoute.js'
+import cors from 'cors'
 
 // app config
 const app = express()
@@ -22,13 +23,17 @@ connectDB()
 
 // middleware
 
+app.use(cors({
+  origin:"http://localhost:5173",
+  credentials:true,
+}))
 app.use(express.json())
 app.use(cookieParser())
-//app.use(cors())
+
 
 
 // api endpoints
-app.use('/api/user',userRouter)
+app.use('/api/user',userRoute)
 app.use('/api/restaurant',restaurantRoute)
 app.use('/api/admin',adminRoute)
 app.use('/api/food',foodRoute)
