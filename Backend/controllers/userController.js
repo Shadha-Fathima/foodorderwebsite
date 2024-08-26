@@ -261,14 +261,14 @@ export const userLogin = async (req, res, next) => {
         }
 
         // Compare the provided password with the stored hash
-        const passwordMatch = await bcrypt.compare(password, isUserExist.password); // Added `await` here
+        const passwordMatch = await bcrypt.compare(password, isUserExist.password); 
 
         if (!passwordMatch) {
             return res.status(401).json({ success: false, message: 'User not authenticated' });
         }
 
         // Generate a token and set it as a cookie
-        const token = generateUserToken(isUserExist._id); // Use _id instead of email
+        const token = generateUserToken(isUserExist._id);
         res.cookie("token", token, {
             httpOnly: true,
             sameSite: 'None'

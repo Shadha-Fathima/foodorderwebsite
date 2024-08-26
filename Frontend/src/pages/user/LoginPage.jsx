@@ -16,7 +16,7 @@ export const LoginPage = () => {
   
     try {
       const response = await userLogin(data);
-      toast.success("Log-in success");
+      toast.success("Login success");
       navigate("/");
   } catch (error) {
       toast.error("Login Failed");

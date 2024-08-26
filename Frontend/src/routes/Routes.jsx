@@ -11,6 +11,7 @@ import { OrderPage } from "../pages/user/OrderPage";
 import { CartPage } from "../pages/user/CartPage";
 import { ProfilePage } from "../pages/user/ProfilePage";
 import { RestaurantDetailsPage } from "../pages/user/RestaurantDetailsPage";
+import { UserAuth } from "./protectedRoutes/userAuth";
 
 
 
@@ -43,7 +44,9 @@ export const router =createBrowserRouter([
     {
       path:"user",
       element:
-          <UserLayout/>,
+          <UserAuth>
+            <UserLayout/>
+          </UserAuth>,
       children:[
         {
           path:"restaurants",

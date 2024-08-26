@@ -2,6 +2,8 @@ import { Admin } from "../models/adminModel.js"
 import { generateAdminToken } from "../utils/generateToken.js"
 import bcrypt from 'bcrypt'
 import {Restaurant} from "../models/restaurantModel.js"
+import { User } from "../models/userModel.js"
+import { Order } from "../models/orderModel.js"
 
 // admin login
 export const adminLogin= async(req,res,next)=>{
@@ -31,7 +33,7 @@ export const adminLogin= async(req,res,next)=>{
 
        
         
-        if(password!==isAdminExist.password){
+        if(password==isAdminExist.password){
             
             return res.status(400).json({success:false,message:'admin not authenticated'})
         }
@@ -226,7 +228,7 @@ export const deleteRestaurant = async (req, res) => {
 // List all Users
 export const listUsers = async (req, res) => {
     try {
-        const users = await users.find();
+        const users = await User.find();
         res.json({ success: true, data: users });
     } catch (error) {
         res.status(500).json({ message: error.message || 'Internal server error' });
@@ -250,7 +252,7 @@ export const updateUserRole = async (req, res) => {
 // List all Orders
 export const listOrders = async (req, res) => {
     try {
-        const orders = await orders.find().populate('userId').populate('restaurantId').populate('food.foodItemsId');
+        const orders = await Order.find().populate('userId').populate('restaurantId').populate('fooditems.foodItemsId');
         res.json({ success: true, data: orders });
     } catch (error) {
         res.status(500).json({ message: error.message || 'Internal server error' });
