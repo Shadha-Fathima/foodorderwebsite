@@ -7,19 +7,6 @@ export const UserAuth = ({ children }) => {
     const location = useLocation();
     const [user, setUser] = useState();
 
-    //const checkUser = async () => {
-        {/*try {
-            const response = await axiosInstance({
-                url: "/user/check-user",
-                method: "GET",
-                withCredentials: true,
-            });
-
-            setUser(true);
-        } catch (error) {
-            navigate("/login");
-            console.log("check user function problem",error);
-        }*/}
     const checkUser = async () =>{     
         try {
             const response = await axiosInstance({
@@ -27,8 +14,6 @@ export const UserAuth = ({ children }) => {
                 method: "GET",
                 withCredentials: true,
             });
-
-
             console.log('Check User Response:', response);
 
             if (response.data.success) {
