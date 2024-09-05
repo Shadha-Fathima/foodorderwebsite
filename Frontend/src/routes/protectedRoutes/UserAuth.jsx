@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { axiosInstance } from "../../config/axiosInstance";
 import {  useLocation, useNavigate } from "react-router-dom";
+import { checkUser } from "../../services/userApi";
 
 export const UserAuth = ({ children }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [user, setUser] = useState();
 
-    const checkUser = async () =>{     
+    const checkUsers = async () =>{     
         try {
-            const response = await axiosInstance({
-                url: "/user/check-user",
-                method: "GET",
-                withCredentials: true,
-            });
+            // const response = await axiosInstance({
+            //     url: "/user/check-user",
+            //     method: "GET",
+            //     withCredentials: true,
+            // });
+            const response = await checkUser()
             console.log('Check User Response:', response);
 
             if (response.data.success) {
@@ -24,14 +26,14 @@ export const UserAuth = ({ children }) => {
             }
         } catch (error) {
             
-            console.error('Check User Function Error:', error.response || error.message);
+            console.error('Check User Function Error:', error);
             setUser(false); 
             navigate("/login");
         }
     };
 
     useEffect(() => {
-        checkUser();
+        checkUsers();
     }, [location.pathname]);
 
     return user ? children : null;

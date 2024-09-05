@@ -1,25 +1,40 @@
 import { Food } from "../models/foodModel.js";
 
 
-export const getFood= async(req,res,next)=>{
+// export const getFood= async(req,res,next)=>{
+//     try {
+
+//         const foodList = await Food.find();
+
+//         res.json({success: true,message:'fetched food list',data:foodList})
+
+//         // check restaurant exist
+//         if (!foodList) {
+//             return res.status(404).json({ success: false, message: 'food not found' });
+//           }
+
+//     } catch (error) {
+//         console.log('error', error)
+//         res.status(500).json({message:error.message || 'Internal server error'}) 
+//     }
+
+
+// }
+
+export const getFood = async (req, res, next) => {
     try {
+        const foodList = await Food.find().populate('restaurantId', 'name');
 
-        const foodList = await Food.find();
+        if (!foodList || foodList.length === 0) {
+            return res.status(404).json({ success: false, message: 'Food not found' });
+        }
 
-        res.json({success: true,message:'fetched food list',data:foodList})
-
-        // check restaurant exist
-        if (!foodList) {
-            return res.status(404).json({ success: false, message: 'food not found' });
-          }
-
+        res.json({ success: true, message: 'fetched food list', data: foodList });
     } catch (error) {
-        console.log('error', error)
-        res.status(500).json({message:error.message || 'Internal server error'}) 
+        console.log('error', error);
+        res.status(500).json({ message: error.message || 'Internal server error' });
     }
-
-
-}
+};
 
 
 export const addFood= async(req,res,next)=>{

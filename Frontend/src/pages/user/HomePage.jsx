@@ -1,5 +1,6 @@
 import React from 'react'
 import { AboutPage } from './AboutPage'
+import { MenuPage } from './MenuPage'
 
 export const HomePage = () => {
   return (
@@ -22,6 +23,9 @@ export const HomePage = () => {
           </div>
         </div>
       </div>
-    </div><AboutPage /></>
+    </div>
+    <AboutPage />
+    <MenuPage/>
+    </>
   )
 }

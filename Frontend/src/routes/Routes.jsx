@@ -12,6 +12,7 @@ import { CartPage } from "../pages/user/CartPage";
 import { ProfilePage } from "../pages/user/ProfilePage";
 import { RestaurantDetailsPage } from "../pages/user/RestaurantDetailsPage";
 import { UserAuth } from "./protectedRoutes/userAuth";
+import { MenuPage } from "../pages/user/MenuPage";
 
 
 
@@ -44,9 +45,9 @@ export const router =createBrowserRouter([
     {
       path:"user",
       element:
-          <UserAuth>
+          
             <UserLayout/>
-          </UserAuth>,
+          ,
       children:[
         {
           path:"restaurants",
@@ -67,7 +68,11 @@ export const router =createBrowserRouter([
       {
           path: "cart",
           element: <CartPage />,
-      }
+      },
+      {
+        path: "menu",
+        element: <MenuPage />,
+    }
 
       ]
     }

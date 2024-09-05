@@ -300,9 +300,10 @@ export const userProfile = async (req, res, next) => {
 };
 
 export const checkUser = async (req, res, next) => {
+   console.log("api called")
     try {
         const user = req.user;
-
+        console.log(user,"user")
         if (!user) {
             return res.status(401).json({ success: false, message: "User not authenticated" });
         }

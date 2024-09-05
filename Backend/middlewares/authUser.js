@@ -1,9 +1,11 @@
 import jwt from 'jsonwebtoken'
 
 export const authUser = (req,res,next) =>{
+    console.log("middleware called")
     try{
         const {token} = req.cookies;
-        
+        console.log(req.cookies)
+        console.log(token,"token")
         if(!token){
             return res.status(401).json({success: false,message:"user not authenticated"})
         }

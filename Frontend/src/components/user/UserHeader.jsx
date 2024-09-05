@@ -21,8 +21,8 @@ export const UserHeader = () => {
          Restaurants
       
        </Link>
-       <ShoppingCart />
-       <CircleUserRound />
+       <Link to ={"/user/cart"}><ShoppingCart /></Link>
+       <Link to ={"/user/profile"}><CircleUserRound /></Link>
        <Link to='/signup'>
          <button className='bg-gradient-to-r bg-green text-white font-semibold py-2 px-6 rounded-xl shadow-lg transform transition duration-300 ease-in-out hover:scale-[1.02] hover:backface-visibility-hidden' >Sign Up</button>
        </Link>

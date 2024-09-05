@@ -1,6 +1,5 @@
 import basket_icon from './basket_icon.png'
 import logo from './logo.png'
-import header_img from './header_img.png'
 import search_icon from './search_icon.png'
 import menu_1 from './menu_1.png'
 import menu_2 from './menu_2.png'
@@ -15,9 +14,9 @@ import food_1 from './food_1.png'
 import food_2 from './food_2.png'
 import food_3 from './food_3.png'
 import food_4 from './food_4.png'
-import food_5 from './food_5.png'
+
 import food_6 from './food_6.png'
-import food_7 from './food_7.png'
+
 import food_8 from './food_8.png'
 import food_9 from './food_9.png'
 import food_10 from './food_10.png'
@@ -63,7 +62,7 @@ import parcel_icon from './parcel_icon.png'
 export const assets = {
     logo,
     basket_icon,
-    header_img,
+    
     search_icon,
     rating_starts,
     add_icon_green,
@@ -149,7 +148,7 @@ export const food_list = [
     }, {
         _id: "5",
         name: "Lasagna Rolls",
-        image: food_5,
+        image: food_15,
         price: 14,
         description: "Food provides essential nutrients for overall health and well-being",
         category: "Rolls"
@@ -163,7 +162,7 @@ export const food_list = [
     }, {
         _id: "7",
         name: "Chicken Rolls",
-        image: food_7,
+        image: food_17,
         price: 20,
         description: "Food provides essential nutrients for overall health and well-being",
         category: "Rolls"
